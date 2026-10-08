@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  html {
+    direction: rtl;
+    font-family: var(--font-cairo), system-ui, -apple-system, sans-serif;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: #070D1B !important;
+    background-image: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.06) 0%, transparent 60%) !important;
+    color: #E2E8F0 !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 1. الحاوية العامة لكامل لوحة التحكم */
+main {
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 1.5rem !important;
+  display: block !important;
+}
+
+/* 2. تخصيص صفحة تسجيل الدخول فقط */
+main:has(form button:has-text("تسجيل الدخول")),
+div:has(> form button:has-text("تسجيل الدخول")) {
+  max-width: 440px !important;
+  margin: 10vh auto !important;
+  background: #0E172B !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1.25rem !important;
+  padding: 2.25rem !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* 3. شريط الهيدر العلوي */
+header, 
+nav,
+main > div:first-child:has(button:has-text("خروج")) {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding: 1rem 1.5rem !important;
+  background: rgba(14, 23, 43, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1rem !important;
+  margin-bottom: 2rem !important;
+}
+
+header > div,
+nav > div,
+main > div:first-child > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+}
+
+/* 4. بطاقات الإحصائيات (توزيع أفقي بـ 3 أعمدة) */
+main > .grid,
+.grid:has(> div:has(.text-2xl)),
+.grid:has(> div:has(.text-3xl)) {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 1.25rem !important;
+  width: 100% !important;
+  margin-bottom: 2rem !important;
+}
+
+.grid > div {
+  background: linear-gradient(180deg, rgba(17, 27, 49, 0.8) 0%, rgba(11, 18, 34, 0.95) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1rem !important;
+  padding: 1.5rem !important;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 5. شريط أدوات الفلاتر والبحث */
+main .flex:has(input),
+main .flex:has(select) {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1rem !important;
+  width: 100% !important;
+  margin-bottom: 1.5rem !important;
+}
+
+input, select {
+  background: #0B132B !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 0.65rem !important;
+  padding: 0.65rem 1rem !important;
+  font-size: 0.875rem !important;
+}
+
+input:focus, select:focus {
+  border-color: #00F2FE !important;
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15) !important;
+}
+
+/* 6. جداول المشتركين بطول وعرض الشاشة الكامل */
+table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 0.6rem !important;
+}
+
+th {
+  color: #64748B !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.25rem !important;
+  text-align: right !important;
+}
+
+td {
+  background: rgba(14, 23, 43, 0.8) !important;
+  padding: 1.1rem 1.25rem !important;
+  font-size: 0.9rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+tr td:first-child {
+  border-top-right-radius: 0.85rem !important;
+  border-bottom-right-radius: 0.85rem !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+tr td:last-child {
+  border-top-left-radius: 0.85rem !important;
+  border-bottom-left-radius: 0.85rem !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 7. الأزرار */
+button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  font-weight: 600 !important;
+  border-radius: 0.65rem !important;
+  cursor: pointer !important;
+  padding: 0.55rem 1.1rem !important;
+  border: none !important;
+}
+
+/* الزر الأساسي النيوني */
+button:has-text("مزوّد جديد"),
+button:has-text("إضافة مشترك") {
+  background: linear-gradient(135deg, #00F2FE 0%, #0072FF 100%) !important;
+  color: #040814 !important;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25) !important;
+}
+
+/* زر واتساب */
+button:has(svg[class*="message"]),
+a[href*="wa.me"] {
+  background: rgba(37, 211, 102, 0.12) !important;
+  color: #25D366 !important;
+  border: 1px solid rgba(37, 211, 102, 0.25) !important;
+}
+
+/* زر تسجيل الخروج */
+button:has-text("خروج") {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #F87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
 }
